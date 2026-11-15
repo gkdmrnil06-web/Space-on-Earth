@@ -7,7 +7,7 @@ from html import escape
 
 
 def render_login_visual():
-    logo_path = Path(__file__).parent / "assets" / "space_on_earth_logo.png"
+    logo_path = Path(__file__).parent / "space_on_earth_logo.png"
     logo_data = base64.b64encode(logo_path.read_bytes()).decode("ascii")
     st.markdown(f"""
     <style>
