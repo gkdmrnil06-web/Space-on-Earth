@@ -16,8 +16,8 @@ from shapely.geometry import Point, shape
 from shapely.ops import unary_union
 from shapely.strtree import STRtree
 
-MAP_PATH = Path(__file__).parent / 'assets' / 'naturalearth_land_110m.geojson'
-LAKES_PATH = Path(__file__).parent / 'assets' / 'gshhg_lakes_intermediate.geojson'
+MAP_PATH = Path(__file__).parent / 'naturalearth_land_110m.geojson'
+LAKES_PATH = Path(__file__).parent / 'gshhg_lakes_intermediate.geojson'
 WATER_TYPES = {
     'water', 'lake', 'reservoir', 'river', 'riverbank', 'stream', 'canal',
     'sea', 'ocean', 'bay', 'strait', 'lagoon', 'wetland', 'pond', 'basin',
