@@ -52,7 +52,7 @@ from functools import lru_cache as _lru_cache
 @_lru_cache(maxsize=96)
 def _offline_catalog(language):
     try:
-        data = _json.loads((_Path(__file__).parent / 'translations' / (language + '.json')).read_text(encoding='utf-8'))
+       data = _json.loads((_Path(__file__).parent / (language + '.json')).read_text(encoding='utf-8'))
         return data if isinstance(data, dict) else {}
     except (OSError, ValueError):
         return {}
