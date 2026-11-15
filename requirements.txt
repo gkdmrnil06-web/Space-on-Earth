@@ -1,0 +1,16 @@
+streamlit>=1.38
+folium
+streamlit-folium
+streamlit-geolocation
+pandas
+plotly
+numpy
+geopy
+requests
+rasterio
+pyproj
+argon2-cffi
+pycountry
+Babel
+deep-translator
+shapely>=2.0

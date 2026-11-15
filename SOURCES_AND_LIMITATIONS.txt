@@ -1,0 +1,14 @@
+Space on Earth — Annual crop update (13 crops)
+
+Source: FAO ECOCROP environmental thresholds via OpenCLIM EcoCrop_DB.csv snapshot.
+https://www.fao.org/geospatial/data-and-tools/data-portals/ecocrop/
+https://github.com/OpenCLIM/ecocrop/blob/main/EcoCrop_DB.csv
+Independent readable profiles: https://forecast.farm/tomato , /chickpea , /barley , /soybean , /lentil , /groundnut
+
+FAO ECOCROP values are expert-compiled species-level ecological ranges, NOT measured farm data or verified yields. Crop cycle is a broad species-level estimate.
+The source_id column is blank when a numeric FAO identifier was not independently confirmed; never invent an ID.
+The pH optimal/absolute limits in some mirrored records are identical: preserved as published rather than fabricated.
+NASA POWER temperature and seasonal rainfall continue to come from the user's existing nasa_data.py module. Seasonal rainfall MUST NOT be compared with annual FAO rainfall thresholds.
+Water categories, soil match, crop rotation and colored ranking remain PROTOTYPE HEURISTICS, not FAO-validated recommendations.
+
+Installation: Back up project. Replace only app.py, crop_rotation.py, crop_requirements.csv, dashboard_ui.py, ui_translate.py. All other modules remain unchanged.
