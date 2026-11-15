@@ -9,95 +9,58 @@ try:
     from dashboard_translations import EXTRA
     TRANSLATIONS.update(EXTRA)
 except ImportError:
-    # Existing projects may keep this optional translation dictionary separately.
-    pass
-
-# No paid/cloud translation dependency. Cached or free best-effort providers.
-from free_translation import translate as _translate_online, status as _translation_status
-
-def translation_backend_status():
-    return _translation_status()
-
-FRENCH = {
-    "Country & language": "Pays et langue", "Language override (optional)": "Langue préférée (facultatif)",
-    "Language:": "Langue :", "Farm location is chosen separately on the map.": "L’emplacement de la ferme est choisi séparément sur la carte.",
-    "Other languages use free online machine translation. Translation may be incomplete or temporarily unavailable.": "Les autres langues utilisent une traduction automatique gratuite en ligne. La traduction peut être incomplète ou temporairement indisponible.",
-    "NASA-POWERED RESEARCH PROTOTYPE": "PROTOTYPE DE RECHERCHE BASÉ SUR LES DONNÉES DE LA NASA",
-    "Grow smarter.": "Cultivez plus intelligemment.", "Understand your land.": "Comprenez votre terre.",
-    "Discover climate trends, explore crop rotation options, and plan your farm with clear, data-informed insights.": "Découvrez les tendances climatiques, explorez les possibilités de rotation des cultures et planifiez votre exploitation grâce aux données.",
-    "Crop planning": "Planification des cultures", "Irrigation context": "Informations sur l’irrigation",
-    "NASA climate data": "Données climatiques de la NASA", "Global locations": "Localisation mondiale",
-    "Log In": "Connexion", "Sign Up": "Inscription", "Email address": "Adresse e-mail",
-    "Password": "Mot de passe", "Create password (12+ characters)": "Créer un mot de passe (12 caractères minimum)",
-    "Confirm password": "Confirmer le mot de passe", "Create Account": "Créer un compte",
-    "Continue as Guest": "Continuer en tant qu’invité", "Log Out": "Déconnexion",
-    "Guest mode": "Mode invité", "Signed in:": "Connecté :",
-    "Local research prototype — do not use an existing personal password.": "Prototype de recherche local — n’utilisez pas un mot de passe personnel existant.",
-    "🌍 Welcome to Space on Earth": "🌍 Bienvenue sur Space on Earth",
-    "Demo only: emails are not verified. Accounts are stored only on this computer. Not suitable for public deployment.": "Démonstration : les adresses e-mail ne sont pas vérifiées. Les comptes sont stockés uniquement sur cet ordinateur. Ne convient pas à un déploiement public.",
-    "Invalid credentials or temporarily locked account.": "Identifiants incorrects ou compte temporairement verrouillé.",
-    "Passwords do not match.": "Les mots de passe ne correspondent pas.",
-    "Enter a valid email address format.": "Saisissez une adresse e-mail valide.",
-    "Use a password between 12 and 128 characters.": "Utilisez un mot de passe de 12 à 128 caractères.",
-    "Unable to create account. Try a different email.": "Impossible de créer le compte. Essayez une autre adresse e-mail.",
-    "Local account created. Open Log In to sign in.": "Compte local créé. Ouvrez Connexion pour vous connecter.",
-}
-
-OFFLINE_CORE = {'Grow smarter.': ('Daha bilinçli yetiştirin.', 'より賢く育てましょう。'), 'Understand your land.': ('Toprağınızı tanıyın.', 'あなたの土地を理解しましょう。'), 'Discover climate trends, explore crop rotation options, and plan your farm with clear, data-informed insights.': ('İklim eğilimlerini keşfedin, ürün rotasyonu seçeneklerini inceleyin ve çiftliğinizi verilere dayanarak planlayın.', '気候の傾向を把握し、輪作の選択肢を検討し、データに基づいて農場を計画しましょう。'), 'NASA-POWERED RESEARCH PROTOTYPE': ('NASA VERİLERİYLE DESTEKLENEN ARAŞTIRMA PROTOTİPİ', 'NASAデータを活用した研究用試作品'), 'Crop planning': ('Ürün planlama', '作物計画'), 'Irrigation context': ('Sulama bilgileri', '灌漑情報'), 'NASA climate data': ('NASA iklim verileri', 'NASAの気候データ'), 'Global locations': ('Dünya genelinde konumlar', '世界中の場所'), 'Country & language': ('Ülke ve dil', '国と言語'), 'Language override (optional)': ('Dil tercihi (isteğe bağlı)', '言語の変更（任意）'), 'Language:': ('Dil:', '言語：'), 'Farm location is chosen separately on the map.': ('Tarla konumu haritadan ayrıca seçilir.', '農場の場所は地図上で別途選択します。'), 'Other languages use free online machine translation. Translation may be incomplete or temporarily unavailable.': ('Diğer diller için ücretsiz çevrimiçi çeviri kullanılır. Çeviri eksik veya geçici olarak kullanılamaz olabilir.', '他の言語では無料のオンライン機械翻訳を使用します。翻訳が不完全または一時的に利用できない場合があります。'), 'Translation unavailable for some text; showing English fallback. Check internet connection.': ('Bazı metinler çevrilemedi; İngilizce gösteriliyor. İnternet bağlantısını kontrol edin.', '一部の文章を翻訳できないため、英語で表示しています。インターネット接続をご確認ください。'), 'Local research prototype — do not use an existing personal password.': ('Yerel araştırma prototipi — kullandığınız kişisel şifreleri burada kullanmayın.', 'ローカル研究用試作品です。普段使用しているパスワードを使わないでください。'), 'Log In': ('Giriş yap', 'ログイン'), 'Sign Up': ('Kayıt ol', '新規登録'), 'Email address': ('E-posta adresi', 'メールアドレス'), 'Password': ('Şifre', 'パスワード'), 'Create password (12+ characters)': ('Şifre oluştur (en az 12 karakter)', 'パスワードを作成（12文字以上）'), 'Confirm password': ('Şifreyi doğrula', 'パスワードを確認'), 'Create Account': ('Hesap oluştur', 'アカウント作成'), 'Continue as Guest': ('Misafir olarak devam et', 'ゲストとして続行'), 'Log Out': ('Çıkış yap', 'ログアウト'), 'Guest mode': ('Misafir modu', 'ゲストモード')}
+    EXTRA = {}
 
 from pathlib import Path as _Path
 import json as _json
 from functools import lru_cache as _lru_cache
+from free_translation import translate as _translate_online, status as _translation_status
+
+
+def translation_backend_status():
+    return _translation_status()
+
 
 @_lru_cache(maxsize=96)
 def _offline_catalog(language):
-    try:
-       data = _json.loads((_Path(__file__).parent / (language + '.json')).read_text(encoding='utf-8'))
-        return data if isinstance(data, dict) else {}
-    except (OSError, ValueError):
-        return {}
+    """Load bundled translations from the repository root or legacy folder."""
+    root = _Path(__file__).resolve().parent
+    for path in (root / (language + '.json'), root / 'translations' / (language + '.json')):
+        try:
+            value = _json.loads(path.read_text(encoding='utf-8'))
+            if isinstance(value, dict):
+                return value
+        except (OSError, ValueError):
+            continue
+    return {}
 
-@_lru_cache(maxsize=1)
-def _extra_dashboard_labels():
-    from dashboard_translations import EXTRA
-    return EXTRA
 
 def get_language():
-    return st.session_state.get("ui_language", "en")
+    return st.session_state.get('ui_language', 'en')
 
 
 def t(message, **values):
-    """Translate UI display strings; never translate calculation identifiers."""
+    """Translate UI strings without changing internal data identifiers."""
     language = get_language()
     source = str(message)
-    if language == "en" or not source.strip():
+    catalog = _offline_catalog(language)
+    if language == 'en' or not source.strip():
         result = source
-    # Curated offline catalog is highest priority. Other bundled catalogs and
-    # optional providers only fill gaps. Never overwrite a verified translation.
-    elif source in _offline_catalog(language):
-        result = _offline_catalog(language)[source]
+    elif source in catalog:
+        result = catalog[source]
     elif source.startswith('#### ') and t(source[5:]) != source[5:]:
         result = '#### ' + t(source[5:])
     elif source.startswith('### ') and t(source[4:]) != source[4:]:
         result = '### ' + t(source[4:])
     elif source.startswith('**') and source.endswith('**') and t(source[2:-2]) != source[2:-2]:
         result = '**' + t(source[2:-2]) + '**'
-    elif language in ("tr", "ja") and source in OFFLINE_CORE:
-        result = OFFLINE_CORE[source][0 if language == "tr" else 1]
-    elif language == "fr" and source in FRENCH:
-        result = FRENCH[source]
-    elif language in ("tr", "zh") and source in TRANSLATIONS:
-        result = TRANSLATIONS[source][0 if language == "tr" else 1]
-    elif source in _offline_catalog(language):
-        result = _offline_catalog(language)[source]
-    elif language in ('tr', 'zh') and source in _extra_dashboard_labels():
-        result = _extra_dashboard_labels()[source][0 if language == 'tr' else 1]
+    elif language in ('tr', 'zh') and source in TRANSLATIONS:
+        result = TRANSLATIONS[source][0 if language == 'tr' else 1]
     else:
         try:
             result = _translate_online(source, language)
         except Exception as exc:
-            import streamlit as st
-            st.session_state["translation_error"] = type(exc).__name__
+            st.session_state['translation_error'] = type(exc).__name__
             result = source
     if values:
         try:
@@ -106,10 +69,11 @@ def t(message, **values):
             return source.format(**values)
     return result
 
+
 def month_name(month, short=False):
     return t(calendar.month_abbr[month] if short else calendar.month_name[month])
 
 
 def local_date(day):
-    """Format presentation date only, leaving its datetime value untouched."""
+    """Format display dates without changing datetime values."""
     return f"{day.day:02d} {t(calendar.month_name[day.month])} {day.year}"
